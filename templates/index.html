@@ -1,32 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LLM Chat</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #chat {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+
+        .message {
+            margin-bottom: 15px;
+        }
+
+        .user {
+            font-weight: bold;
+        }
+
+        #input-area {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            background: white;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="chat"></div>
+
+<div id="input-area">
+    <input id="message" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+</div>
+
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+
     const input = document.getElementById("message");
     const chat = document.getElementById("chat");
 
-    input.addEventListener("keypress", function(event) {
+    input.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
             sendMessage();
         }
     });
 
-    async function sendMessage() {
+    window.sendMessage = async function() {
         const message = input.value.trim();
         if (!message) return;
 
         chat.innerHTML += `<div class="message"><span class="user">You:</span> ${message}</div>`;
-
         input.value = "";
 
-        const res = await fetch("/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: message })
-        });
+        try {
+            const res = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: message })
+            });
 
-        const data = await res.json();
+            const data = await res.json();
 
-        chat.innerHTML += `<div class="message"><span class="user">AI:</span> ${data.response}</div>`;
+            chat.innerHTML += `<div class="message"><span class="user">AI:</span> ${data.response}</div>`;
+            chat.scrollTop = chat.scrollHeight;
 
-        chat.scrollTop = chat.scrollHeight;
+        } catch (error) {
+            chat.innerHTML += `<div class="message">Error: ${error}</div>`;
+        }
     }
+
+});
 </script>
+
+</body>
+</html>
