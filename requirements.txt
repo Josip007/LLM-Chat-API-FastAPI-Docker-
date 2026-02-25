@@ -4,3 +4,4 @@ python-dotenv
 groq
 pydantic
 python-dotenv
+jinja2

@@ -1,3 +1,8 @@
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi import Request
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from app.llm import ask_llm
@@ -8,16 +13,17 @@ app = FastAPI(
     version="1.0.0",
 )
 
+templates = Jinja2Templates(directory="templates")
+
 # Request model
 class ChatRequest(BaseModel):
     message: str
 
 
 # Root endpoint
-@app.get("/")
-def root():
-    return {"message": "LLM Chat API is running"}
-
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 # Health check endpoint
 @app.get("/health")
