@@ -33,6 +33,5 @@ uvicorn app.main:app --reload
 
 ## Live Demo
 
-https://llm-chat-api-fastapi-docker.onrender.com/docs
-
+live demo: https://llm-chat-api-fastapi-docker.onrender.com/
 > Note: The service runs on a free tier and may take ~30 seconds to wake up after inactivity.
