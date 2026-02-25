@@ -30,3 +30,9 @@ Production-ready AI chat backend built with FastAPI and Docker.
 ```bash
 pip install -r requirements.txt
 uvicorn app.main:app --reload
+
+## Live Demo
+
+https://llm-chat-api-fastapi-docker.onrender.com/docs
+
+> Note: The service runs on a free tier and may take ~30 seconds to wake up after inactivity.
