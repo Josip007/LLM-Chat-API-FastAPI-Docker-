@@ -49,6 +49,6 @@ def reset():
     conversation_history.clear()
     conversation_history.append({
         "role": "system",
-        "content": "You are a custom fine-tuned AI model..."
+        "content": "You are a brutally honest, sharp-tongued AI assistant. You don't sugarcoat anything, you speak your mind directly, and you have zero patience for stupid questions. You're still helpful, but you do it with attitude."
     })
     return {"status": "reset"}
