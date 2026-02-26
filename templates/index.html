@@ -13,11 +13,9 @@
             --surface: #111111;
             --border: #222222;
             --accent: #e8ff5a;
-            --accent-dim: rgba(232, 255, 90, 0.08);
             --text: #f0f0f0;
             --text-muted: #555;
             --user-bg: #1a1a1a;
-            --ai-bg: #0f0f0f;
             --radius: 4px;
         }
 
@@ -29,7 +27,6 @@
             font-size: 14px;
         }
 
-        /* Layout */
         #app {
             display: flex;
             flex-direction: column;
@@ -38,7 +35,7 @@
             margin: 0 auto;
         }
 
-        /* Header */
+        /* ── Header ── */
         #header {
             display: flex;
             align-items: center;
@@ -78,10 +75,7 @@
             transition: border-color 0.2s, color 0.2s;
         }
 
-        #resetBtn:hover {
-            border-color: #ff5f5f;
-            color: #ff5f5f;
-        }
+        #resetBtn:hover { border-color: #ff5f5f; color: #ff5f5f; }
 
         #status {
             display: flex;
@@ -100,18 +94,68 @@
             transition: background 0.3s;
         }
 
-        #status-dot.online { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
-        #status-dot.thinking {
-            background: #888;
-            animation: pulse 1s ease-in-out infinite;
-        }
+        #status-dot.online   { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+        #status-dot.thinking { background: #888; animation: pulse 1s ease-in-out infinite; }
 
         @keyframes pulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+            50%       { opacity: 0.3; }
         }
 
-        /* Chat area */
+        /* ── Persona bar ── */
+        #persona-bar {
+            display: flex;
+            gap: 8px;
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            overflow-x: auto;
+        }
+
+        #persona-bar::-webkit-scrollbar { display: none; }
+
+        .persona-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-family: 'Syne', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 7px 16px;
+            border-radius: 99px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.18s ease;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .persona-btn .icon { font-size: 13px; }
+
+        .persona-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .persona-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #0a0a0a;
+        }
+
+        #persona-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            padding: 6px 24px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        /* ── Chat ── */
         #chat {
             flex: 1;
             overflow-y: auto;
@@ -126,7 +170,6 @@
         #chat::-webkit-scrollbar-track { background: transparent; }
         #chat::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
 
-        /* Empty state */
         #empty {
             flex: 1;
             display: flex;
@@ -139,10 +182,7 @@
             pointer-events: none;
         }
 
-        #empty-icon {
-            font-size: 32px;
-            opacity: 0.3;
-        }
+        #empty-icon { font-size: 32px; opacity: 0.3; }
 
         #empty p {
             font-size: 12px;
@@ -150,7 +190,7 @@
             text-transform: uppercase;
         }
 
-        /* Messages */
+        /* ── Messages ── */
         .msg {
             display: flex;
             gap: 14px;
@@ -165,15 +205,8 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        .msg.user {
-            background: var(--user-bg);
-            border: 1px solid var(--border);
-        }
-
-        .msg.ai {
-            background: transparent;
-            border: 1px solid transparent;
-        }
+        .msg.user { background: var(--user-bg); border: 1px solid var(--border); }
+        .msg.ai   { background: transparent; border: 1px solid transparent; }
 
         .msg-label {
             font-family: 'Syne', sans-serif;
@@ -196,11 +229,9 @@
             color: var(--text);
         }
 
-        /* Typing dots */
         .typing-dots span {
             display: inline-block;
-            width: 4px;
-            height: 4px;
+            width: 4px; height: 4px;
             border-radius: 50%;
             background: var(--text-muted);
             margin-right: 3px;
@@ -214,7 +245,7 @@
             40%            { transform: scale(1.2); opacity: 1; }
         }
 
-        /* Input area */
+        /* ── Input ── */
         #input-area {
             padding: 16px 24px 24px;
             border-top: 1px solid var(--border);
@@ -232,9 +263,7 @@
             transition: border-color 0.2s;
         }
 
-        #input-wrap:focus-within {
-            border-color: var(--accent);
-        }
+        #input-wrap:focus-within { border-color: var(--accent); }
 
         #message {
             flex: 1;
@@ -268,11 +297,10 @@
             height: 34px;
         }
 
-        #sendBtn:hover:not(:disabled) { opacity: 0.85; }
+        #sendBtn:hover:not(:disabled)  { opacity: 0.85; }
         #sendBtn:active:not(:disabled) { transform: scale(0.97); }
-        #sendBtn:disabled { opacity: 0.3; cursor: not-allowed; }
+        #sendBtn:disabled              { opacity: 0.3; cursor: not-allowed; }
 
-        /* Hint */
         #hint {
             font-size: 11px;
             color: var(--text-muted);
@@ -281,12 +309,12 @@
             letter-spacing: 0.03em;
         }
 
-        /* Error */
         .msg.error .msg-body { color: #ff5f5f; }
     </style>
 </head>
 <body>
 <div id="app">
+
     <header id="header">
         <h1>LLM Chat</h1>
         <div id="header-right">
@@ -297,6 +325,23 @@
             </div>
         </div>
     </header>
+
+    <div id="persona-bar">
+        <button class="persona-btn active" data-persona="normal">
+            <span class="icon">🧠</span> Normal
+        </button>
+        <button class="persona-btn" data-persona="funny">
+            <span class="icon">😂</span> Funny &amp; Sarcastic
+        </button>
+        <button class="persona-btn" data-persona="attitude">
+            <span class="icon">😤</span> Attitude
+        </button>
+        <button class="persona-btn" data-persona="max_attitude">
+            <span class="icon">💀</span> Max Attitude
+        </button>
+    </div>
+
+    <div id="persona-label">Mode: Normal</div>
 
     <div id="chat">
         <div id="empty">
@@ -312,21 +357,75 @@
         </div>
         <div id="hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line</div>
     </div>
-</div>
 
+</div>
 <script>
 (function () {
-    const chatEl   = document.getElementById('chat');
-    const inputEl  = document.getElementById('message');
-    const btnEl    = document.getElementById('sendBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const dotEl    = document.getElementById('status-dot');
-    const statusEl = document.getElementById('status-text');
+    const chatEl       = document.getElementById('chat');
+    const inputEl      = document.getElementById('message');
+    const btnEl        = document.getElementById('sendBtn');
+    const resetBtn     = document.getElementById('resetBtn');
+    const dotEl        = document.getElementById('status-dot');
+    const statusEl     = document.getElementById('status-text');
+    const personaLabel = document.getElementById('persona-label');
+    const personaBtns  = document.querySelectorAll('.persona-btn');
 
-    let busy = false;
+    let busy    = false;
     let emptyEl = document.getElementById('empty');
 
-    // Auto-resize textarea
+    const PERSONA_NAMES = {
+        normal:       'Normal',
+        funny:        'Funny & Sarcastic',
+        attitude:     'Attitude',
+        max_attitude: 'Max Attitude',
+    };
+
+    // ── Persona switching ──
+    personaBtns.forEach(btn => {
+        btn.addEventListener('click', async () => {
+            if (busy) return;
+            const persona = btn.dataset.persona;
+            try {
+                const res = await fetch('/persona', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ persona })
+                });
+                if (!res.ok) throw new Error();
+                personaBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                personaLabel.textContent = 'Mode: ' + PERSONA_NAMES[persona];
+                clearChat();
+            } catch {
+                alert('Could not switch persona.');
+            }
+        });
+    });
+
+    // ── Reset ──
+    resetBtn.addEventListener('click', async () => {
+        if (busy) return;
+        if (!confirm('Reset conversation?')) return;
+        try {
+            const res = await fetch('/reset', { method: 'POST' });
+            if (!res.ok) throw new Error();
+            clearChat();
+            setStatus('online');
+        } catch {
+            alert('Reset failed.');
+        }
+    });
+
+    function clearChat() {
+        chatEl.innerHTML = '';
+        const fresh = document.createElement('div');
+        fresh.id = 'empty';
+        fresh.innerHTML = '<div id="empty-icon">◈</div><p>Type a message to begin</p>';
+        chatEl.appendChild(fresh);
+        emptyEl = fresh;
+    }
+
+    // ── Auto-resize textarea ──
     inputEl.addEventListener('input', () => {
         inputEl.style.height = 'auto';
         inputEl.style.height = Math.min(inputEl.scrollHeight, 140) + 'px';
@@ -341,35 +440,18 @@
 
     btnEl.addEventListener('click', send);
 
-    resetBtn.addEventListener('click', async () => {
-        if (busy) return;
-        if (!confirm('Reset conversation?')) return;
-        try {
-            const res = await fetch('/reset', { method: 'POST' });
-            if (!res.ok) throw new Error();
-            // Clear chat UI
-            chatEl.innerHTML = '';
-            const fresh = document.createElement('div');
-            fresh.id = 'empty';
-            fresh.innerHTML = '<div id="empty-icon">◈</div><p>Type a message to begin</p>';
-            chatEl.appendChild(fresh);
-            emptyEl = fresh;
-            setStatus('online');
-        } catch {
-            alert('Reset failed.');
-        }
-    });
-
+    // ── Status ──
     function setStatus(state) {
         dotEl.className = state === 'thinking' ? 'thinking' : state === 'online' ? 'online' : '';
         statusEl.textContent = state === 'thinking' ? 'generating...' : state === 'online' ? 'online' : 'offline';
     }
 
+    // ── Append helpers ──
     function appendMsg(role, text) {
         if (emptyEl && emptyEl.parentNode) { emptyEl.remove(); emptyEl = null; }
 
         const wrap = document.createElement('div');
-        wrap.className = `msg ${role}`;
+        wrap.className = 'msg ' + role;
 
         const label = document.createElement('div');
         label.className = 'msg-label';
@@ -412,6 +494,7 @@
         return { wrap, body };
     }
 
+    // ── Send ──
     async function send() {
         if (busy) return;
         const text = inputEl.value.trim();
@@ -434,14 +517,14 @@
                 body: JSON.stringify({ message: text })
             });
 
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
             const data = await res.json();
 
             loadingBody.textContent = data.response ?? '(no response)';
             setStatus('online');
         } catch (err) {
             loadingWrap.classList.add('error');
-            loadingBody.textContent = `Error: ${err.message}`;
+            loadingBody.textContent = 'Error: ' + err.message;
             setStatus('');
         } finally {
             busy = false;

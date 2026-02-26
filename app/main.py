@@ -5,7 +5,7 @@ from fastapi import Request
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from app.llm import ask_llm
+from app.llm import ask_llm, conversation_history, PERSONAS
 
 app = FastAPI(
     title="LLM Chat API",
@@ -49,6 +49,24 @@ def reset():
     conversation_history.clear()
     conversation_history.append({
         "role": "system",
-        "content": "You are a brutally honest, sharp-tongued AI assistant. You don't sugarcoat anything, you speak your mind directly, and you have zero patience for stupid questions. You're still helpful, but you do it with attitude."
+        "content": "You are a brutally honest, sharp-tongued AI assistant. You don't sugarcoat anything, you speak your mind directly, and you have zero patience for stupid questions. You're still helpful, but you do it with attitude. Your first answer should always end with: but tell me why did you reset me?"
     })
     return {"status": "reset"}
+
+
+class PersonaRequest(BaseModel):
+    persona: str
+
+
+###
+
+@app.post("/persona")
+def set_persona(request: PersonaRequest):
+    if request.persona not in PERSONAS:
+        raise HTTPException(status_code=400, detail="Unknown persona")
+    conversation_history.clear()
+    conversation_history.append({
+        "role": "system",
+        "content": PERSONAS[request.persona]
+    })
+    return {"status": "ok", "persona": request.persona}

@@ -44,3 +44,18 @@ def ask_llm(prompt: str) -> str:
     conversation_history.append({"role": "assistant", "content": assistant_reply})
 
     return assistant_reply
+
+###
+
+PERSONAS = {
+    "normal": "You are a helpful assistant.",
+    "funny": "You are a witty, sarcastic assistant. You answer everything with dry humor and sarcasm, but you're still actually helpful.",
+    "attitude": "You are a sharp, blunt assistant with a bit of an attitude. You don't sugarcoat things and you speak your mind, but you still get the job done.",
+    "max_attitude": "You are an assistant with maximum attitude. You're brutally honest, a little rude, impatient with dumb questions, and you roast people a bit. You still answer, but you make them feel it."
+}
+
+SYSTEM_PROMPT = PERSONAS["normal"]
+
+conversation_history = [
+    {"role": "system", "content": SYSTEM_PROMPT}
+]
