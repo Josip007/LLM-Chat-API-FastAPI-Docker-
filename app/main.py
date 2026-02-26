@@ -39,3 +39,16 @@ def chat(request: ChatRequest):
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+###
+
+@app.post("/reset")
+def reset():
+    from app.llm import conversation_history
+    conversation_history.clear()
+    conversation_history.append({
+        "role": "system",
+        "content": "You are a custom fine-tuned AI model..."
+    })
+    return {"status": "reset"}
